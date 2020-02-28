@@ -1,43 +1,19 @@
-<!-- https://www.flaticon.com/search/2?word=country -->
-
 <html lang="en">
 
 <head>
-     <title>House of Links</title>
-
-    <style type="text/css">
-        html, body {
-                        font: 11pt times;
-                }
-	#topFrame {
-			width:1250px
-			}
-        #statement {
-                        width:85%;
-                        float:right;
-                        height: 19px;
-                        border: 1px solid darkgray
-                }
-        #network {width: 100%;
-                        height:94%;
-                }
-        #statement2 {
-                        width:1250px;
-                        height: 3%;
-                        border: 1px solid darkgray
-                }
-    </style>
+     <title>Royal Connections</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.js"></script>
     <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.css" rel="stylesheet"/>
     <script type="text/javascript" src="visualisation.js"></script>
+    <link type="text/css" href="index.css"  rel="stylesheet"/>
 
 </head>
 
-<body onload="start(); init('Elizabeth II');">
+<body onload="start(); init('http://dbpedia.org/resource/Elizabeth_II');">
         <div id="topFrame">
-        <input list="names_box"; onchange="init(id)"; value="Elizabeth II"; id="http://dbpedia.org/Elizabeth_II"; onclick="value=''"/>
+        <input id="input_box" list="names_box"; onchange="init(getUri(value))"; value="Elizabeth II"; onclick="value=''"/>
         <datalist id="names_box"></datalist>
         <div align="center"; id="statement"></div>
         </div>

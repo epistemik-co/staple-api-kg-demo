@@ -1,8 +1,8 @@
-const graphql = "http://localhost:4000/graphql"
-
 var nodes, edges, network;
 
-var instructionText = 'Use the searchbox to the left to <b>find people by names</b>. Double-click on nodes to <b>find related entities</b>. Select a node and right-click to <b>go to Wikipedia</b>.'
+var uris = {}
+
+var instructionText = 'Use the searchbox to the left to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. Double-click to <b>go to Wikipedia</b>.'
 
 function getWikipedia(uri) {
     return uri.replace("http://dbpedia.org/resource/", "https://en.wikipedia.org/wiki/")
@@ -10,6 +10,10 @@ function getWikipedia(uri) {
 
 function getDBpedia(uri) {
     return uri.replace("https://en.wikipedia.org/wiki/", "http://dbpedia.org/resource/")
+}
+
+function getUri(label) {
+    return uris[label]
 }
 
 function start() {
@@ -25,7 +29,8 @@ function start() {
         .then(data => {
             console.log("fetched names")
             data.forEach(item => {
-                names_box.append($('<option>').attr('value', decodeURI(item.label)).attr('id', getWikipedia(item._id)));
+                names_box.append($('<option>').attr('value', decodeURI(item.label)));
+                uris[decodeURI(item.label)] = item._id
             });
         });
 }
@@ -185,18 +190,18 @@ function visualise(parent, relation, entity) {
 
 }
 
-function init(name) {
+function init(uri) {
     draw();
 
-    console.log("Searching for: " + name)
+    console.log("Searching for: " + uri)
 
-    fetch(graphql, {
+    fetch("/graphql", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
-        body: JSON.stringify({ query: `{ Person(filter:{label: "` + name + `"}){ _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } }` })
+        body: JSON.stringify({ query: `{ Person(filter:{_id: "` + uri + `"}){ _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } }` })
     })
         .then(r => r.json())
         .then(data => {
@@ -214,7 +219,7 @@ function getRelated(parent) {
         document.getElementById('statement').innerHTML = "Retrieving and visualising the knowledge graph. Please wait...";
         var query = `{ Person(filter: { _id:"` + parent + `"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }`
 
-        fetch(graphql, {
+        fetch("/graphql", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -298,7 +303,7 @@ function draw() {
     network.on("doubleClick", function (params) {
         if (params.nodes[0] != null) {
             var uri = String(params.nodes[0])
-            window.open(String(params.nodes[0]).replace("http://dbpedia.org/resource/", "https://en.wikipedia.org/wiki/"));
+            window.open(getWikipedia(params.nodes[0]));
         }
     });
 

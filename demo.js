@@ -36,9 +36,10 @@ async function Demo() {
     const schema = stapleApi.schema
 
     let people = []
-    console.log("Fetching all people")
+    console.log("Fetching people's names...")
     await stapleApi.graphql('{ Person { _id label } }').then((response) => {
         people = response.data.Person;
+        console.log("All fetched...")
         });
 
     app.get('/people', function (req, res) {

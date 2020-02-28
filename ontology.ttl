@@ -33,16 +33,10 @@
           schema:domainIncludes owl:Thing ;
           schema:rangeIncludes xsd:string .
 
-      dct:empty a rdf:Property, owl:FunctionalProperty ;
-          rdfs:comment "dummy property on Country" ;
-          schema:domainIncludes dbo:Country ;
-          schema:rangeIncludes xsd:string .
-
       dbo:thumbnail a rdf:Property, owl:FunctionalProperty ;
           rdfs:comment "Thumbnail URL" ;
           schema:domainIncludes owl:Thing ;
           schema:rangeIncludes xsd:string .
-
 
       dbo:birthYear a rdf:Property, owl:FunctionalProperty ;
           rdfs:comment "The year of birth" ;
@@ -53,16 +47,6 @@
           rdfs:comment "The year of death" ;
           schema:domainIncludes dbo:Person ;
           schema:rangeIncludes xsd:integer .
-
-      dbo:predecessor a rdf:Property ;
-          rdfs:comment "A predecessor of a person in some formal role" ;
-          schema:domainIncludes dbo:Person ;
-          schema:rangeIncludes dbo:Person .
-
-      dbo:successor a rdf:Property ;
-          rdfs:comment "A successor of a person in some formal role" ;
-          schema:domainIncludes dbo:Person ;
-          schema:rangeIncludes dbo:Person .
 
       dbo:spouse a rdf:Property ;
           rdfs:comment "A spouse of a person" ;
