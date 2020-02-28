@@ -1,26 +1,51 @@
-html, body {
-    font: 11pt times;
-    background-color: white;
+body{        
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
-#topFrame {
-    width:100%
+html, body {
+    font: 11pt arial;
+    background-color: #333333;
+}
+.fixed-header, .fixed-footer{
+    width: 100%;
+    position: fixed;        
+    background-color: #111111;
+    margin-left: -8px;
+    padding: 10px;
+    color: #fff;
+}
+.fixed-header{
+    top: 0;
+}
+.fixed-footer{
+    bottom: 0;
+}    
+.container{
+    width: 100%;
+    margin: 0 auto; 
 }
 #input_box {
-    width: 280px
+    width: 280px;
+    margin-right: 20px;
+    float:right;
+    color: #333333;
+}
+a {
+    color: lightseagreen
 }
 #statement {
-    float:right;
-    height: 19px;
-    background-color: white;
-    border: 1px solid darkgray
+    margin-left: 20px;
+    float:left;
+    background-color: #111111;
+    color: #BBBBBB;
 }
 #network {      
     width: 100%;
-    height:94%;
+    height: 100%;
 }
 #statement2 {
-    width:100%;
-    height: 35px;
-    background-color: white;
-    border: 1px solid darkgray
+    color: #BBBBBB;
+}
+.block {
+    vertical-align: top;
 }

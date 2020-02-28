@@ -2,7 +2,13 @@ var nodes, edges, network;
 
 var uris = {}
 
-var instructionText = 'Use the searchbox to the left to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. Double-click to <b>go to Wikipedia</b>.'
+const countryRels = {
+    birthCountry: "country of birth",
+    deathCountry: "country of death",
+    both: "country of birth & death"
+}
+
+var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. Double-click to <b>go to Wikipedia</b>.'
 
 function getWikipedia(uri) {
     return uri.replace("http://dbpedia.org/resource/", "https://en.wikipedia.org/wiki/")
@@ -63,12 +69,11 @@ function visualise(parent, relation, entity) {
             node.label = entity.label
             node.type = "country"
         } else if (entity._type[0] == "Person") {
-            node.size = 30
+            node.size = 40
             node.type = "person"
             if (entity.thumbnail != null) {
                 node.image = entity.thumbnail
                 node.shape = 'circularImage'
-                node.size = 40
                 node.brokenImage = "https://image.flaticon.com/icons/svg/149/149071.svg"
             } else if (entity.gender == "female") {
                 node.image = "https://image.flaticon.com/icons/svg/201/201634.svg"
@@ -151,13 +156,13 @@ function visualise(parent, relation, entity) {
         if (relation == "birthCountry" || relation == "deathCountry") {
             var edgeId = parent + "_country_" + entity._id;
             if (edges.get(edgeId) != null) {
-                edges.update([{ id: edgeId, label: "birthCountry \n deathCountry" }]);
+                edges.update([{ id: edgeId, label: countryRels.both }]);
             } else {
                 edge = {
                     id: edgeId,
                     from: parent,
                     to: entity._id,
-                    label: relation,
+                    label: countryRels[relation],
                     arrows: {
                         to: true
                     }
@@ -216,7 +221,7 @@ function getRelated(parent) {
 
     if (parentNode.type == "person") {
         // successor { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } predecessor { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } }
-        document.getElementById('statement').innerHTML = "Retrieving and visualising the knowledge graph. Please wait...";
+        document.getElementById('statement').innerHTML = "Retrieving data. Please wait...";
         var query = `{ Person(filter: { _id:"` + parent + `"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }`
 
         fetch("/graphql", {
@@ -260,20 +265,27 @@ function draw() {
             hoverConnectedEdges: true,
         },
         "edges": {
-            "font": { face: 'arial' },
+            "font": { 
+                face: 'arial',
+                color: '#FFFFFF',
+                strokeColor: '#000000'
+            },
             "width": 7,
             "length": 20,
             "color": {
-                color: '#C13619',
+                color: '#983131',
                 highlight: '#0C4C8C',
                 hover: '#0C4C8C'
             }
         },
         "nodes": {
-            "font": { face: 'arial' },
+            "font": { 
+                face: 'arial',
+                color: '#FFFFFF'
+            },
             "borderWidth": 10,
             "color": {
-                border: '#C13619',
+                border: '#983131',
                 highlight: '#0C4C8C',
                 hover: '#0C4C8C'
             }
