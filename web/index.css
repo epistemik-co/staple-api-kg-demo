@@ -20,10 +20,6 @@ html, body {
 .fixed-footer{
     bottom: 0;
 }    
-.container{
-    width: 100%;
-    margin: 0 auto; 
-}
 #input_box {
     width: 280px;
     margin-right: 20px;
@@ -42,10 +38,9 @@ a {
 #network {      
     width: 100%;
     height: 100%;
+    border-width: 5px;
+    border: yellow
 }
 #statement2 {
     color: #BBBBBB;
-}
-.block {
-    vertical-align: top;
 }
