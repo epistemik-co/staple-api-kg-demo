@@ -13,12 +13,13 @@
 
 <body onload="start(); init('http://dbpedia.org/resource/Elizabeth_II');">
         <div class="fixed-header">
-                <div align="center" id="statement">Loading, please wait...</div>
                 <div align="center">
                         <input id="input_box" list="names_box" onchange="init(getUri(value))" value="Elizabeth II"
                                 onclick="value=''" />
                         <datalist id="names_box"></datalist>
                 </div>
+                <div align="center" id="statement">Loading, please wait...</div>
+                
         </div>
         <div id="network"></div>
         <div class="fixed-footer">

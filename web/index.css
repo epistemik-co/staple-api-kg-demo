@@ -1,5 +1,5 @@
 body{        
-    padding-top: 40px;
+    padding-top: 33px;
     padding-bottom: 40px;
 }
 html, body {
@@ -16,22 +16,23 @@ html, body {
 }
 .fixed-header{
     top: 0;
+    min-width: 1200px;
 }
 .fixed-footer{
     bottom: 0;
 }    
 #input_box {
     width: 280px;
-    margin-right: 20px;
-    float:right;
+    margin-left: 20px;
+    float:left;
     color: #333333;
 }
 a {
     color: lightseagreen
 }
 #statement {
-    margin-left: 20px;
-    float:left;
+    margin-right: 20px;
+    float:right;
     background-color: #111111;
     color: #BBBBBB;
 }

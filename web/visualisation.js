@@ -122,7 +122,7 @@ function visualise(parent, relation, entity) {
                 id: parent + "_child_" + entity._id,
                 from: parent,
                 to: entity._id,
-                label: "child",
+                label: "parent of",
                 arrows: {
                     to: true
                 }
@@ -133,7 +133,7 @@ function visualise(parent, relation, entity) {
                 id: entity._id + "_child_" + parent,
                 from: entity._id,
                 to: parent,
-                label: "child",
+                label: "parent of",
                 arrows: {
                     to: true
                 }
@@ -146,7 +146,7 @@ function visualise(parent, relation, entity) {
                 id: vertices[0] + "_spouse_" + vertices[1],
                 from: vertices[0],
                 to: vertices[1],
-                label: "spouse",
+                label: "spouse of",
                 arrows: {
                     from: true,
                     to: true
