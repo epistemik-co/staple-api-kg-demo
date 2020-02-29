@@ -2,10 +2,12 @@ var nodes, edges, network;
 
 var uris = {}
 
-const countryRels = {
+const edgeNames = {
     birthCountry: "country of birth",
     deathCountry: "country of death",
-    both: "country of birth & death"
+    both: "country of birth & death",
+    parenthood: "parent of",
+    marriage: "spouse of"
 }
 
 var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. Double-click to <b>go to Wikipedia</b>.'
@@ -68,7 +70,7 @@ function visualise(parent, relation, entity) {
             node.size = 60
             node.label = entity.label
             node.type = "country"
-            node.mass = 4
+            node.mass = 6
         } else if (entity._type[0] == "Person") {
             node.size = 40
             node.type = "person"
@@ -120,10 +122,10 @@ function visualise(parent, relation, entity) {
         var edge = {}
         if (relation == "child") {
             edge = {
-                id: parent + "_child_" + entity._id,
+                id: parent + "_parenthood_" + entity._id,
                 from: parent,
                 to: entity._id,
-                label: "parent of",
+                label: edgeNames.parenthood,
                 arrows: {
                     to: true
                 }
@@ -131,10 +133,10 @@ function visualise(parent, relation, entity) {
         }
         if (relation == "parent") {
             edge = {
-                id: entity._id + "_child_" + parent,
+                id: entity._id + "_parenthood_" + parent,
                 from: entity._id,
                 to: parent,
-                label: "parent of",
+                label: edgeNames.parenthood,
                 arrows: {
                     to: true
                 }
@@ -144,10 +146,10 @@ function visualise(parent, relation, entity) {
             var vertices = [entity._id, parent];
             vertices.sort();
             edge = {
-                id: vertices[0] + "_spouse_" + vertices[1],
+                id: vertices[0] + "_marriage_" + vertices[1],
                 from: vertices[0],
                 to: vertices[1],
-                label: "spouse of",
+                label: edgeNames.marriage,
                 arrows: {
                     from: true,
                     to: true
@@ -160,13 +162,13 @@ function visualise(parent, relation, entity) {
         if (relation == "birthCountry" || relation == "deathCountry") {
             var edgeId = parent + "_country_" + entity._id;
             if (edges.get(edgeId) != null) {
-                edges.update([{ id: edgeId, label: countryRels.both }]);
+                edges.update([{ id: edgeId, label: edgeNames.both }]);
             } else {
                 edge = {
                     id: edgeId,
                     from: parent,
                     to: entity._id,
-                    label: countryRels[relation],
+                    label: edgeNames[relation],
                     arrows: {
                         to: true
                     },
