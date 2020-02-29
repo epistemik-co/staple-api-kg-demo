@@ -68,6 +68,7 @@ function visualise(parent, relation, entity) {
             node.size = 60
             node.label = entity.label
             node.type = "country"
+            node.mass = 4
         } else if (entity._type[0] == "Person") {
             node.size = 40
             node.type = "person"
@@ -150,6 +151,9 @@ function visualise(parent, relation, entity) {
                 arrows: {
                     from: true,
                     to: true
+                },
+                color: {
+                    color: '#543A71'
                 }
             }
         }
@@ -165,6 +169,9 @@ function visualise(parent, relation, entity) {
                     label: countryRels[relation],
                     arrows: {
                         to: true
+                    },
+                    "color": {
+                        color: '#3A4B3A'
                     }
                 }
             }
@@ -270,7 +277,7 @@ function draw() {
                 color: '#FFFFFF',
                 strokeColor: '#000000'
             },
-            "width": 7,
+            "width": 8,
             "length": 20,
             "color": {
                 color: '#983131',
@@ -292,8 +299,8 @@ function draw() {
         },
         "physics": {
             "forceAtlas2Based": {
-                "centralGravity": 0.008,
-                "springConstant": 0.04,
+                "centralGravity": 0.006,
+                "springConstant": 0.09,
                 "damping": 0.8
             },
             "solver": "forceAtlas2Based",

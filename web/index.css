@@ -37,10 +37,9 @@ a {
     color: #BBBBBB;
 }
 #network {      
-    width: 100%;
+    width: 105%;
     height: 100%;
-    border-width: 5px;
-    border: yellow
+    margin-left: -10px;
 }
 #statement2 {
     color: #BBBBBB;
