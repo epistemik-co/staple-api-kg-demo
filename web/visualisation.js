@@ -12,7 +12,7 @@ const edgeNames = {
     marriage: "spouse of"
 }
 
-var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. Double-click to <b>go to Wikipedia</b>.'
+var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>.'
 
 function getWikipedia(uri) {
     return uri.replace("http://dbpedia.org/resource/", "https://en.wikipedia.org/wiki/")
@@ -75,7 +75,7 @@ function visualise(parent, relation, entity) {
             node.type = "country"
             node.mass = 6
         } else if (entity._type[0] == "Person") {
-            node.size = 40
+            node.size = 30
             node.type = "person"
             if (entity.thumbnail != null) {
                 node.image = entity.thumbnail
@@ -107,7 +107,7 @@ function visualise(parent, relation, entity) {
 
             var description = ""
             if (entity.description != null) {
-                description = '<div style="white-space:pre-wrap;">' + entity.description + '</div><br><br>'
+                description = '<div style="white-space:pre-wrap;">' + entity.description + '</div><br>'
             }
             // description = '<p style="white-space:pre-wrap;">Queen of the United Kingdom of Great Britain and Ireland from 20 June 1837, and the first Empress of India from 1 May 1876, until her death on 22 January 1901. The period centred on her reign is known as the Victorian era.</p><br><br>'
             node.label = decodeURI(entity.label) + year
@@ -190,7 +190,7 @@ function visualise(parent, relation, entity) {
                     "color": {
                         color: '#0E4E4A',
                         highlight: '#1FA29A',
-                        hover:  '#1FA29A'
+                        hover: '#1FA29A'
                     }
                 }
             }
@@ -246,6 +246,8 @@ function getRelated(parent) {
     var parentNode = nodes.get(parent);
 
     if (parentNode.type == "person") {
+        nodes.update({ id: parent, size: 40 });
+
         document.getElementById('statement').innerHTML = "Retrieving data. Please wait...";
         var query = `{ Person(filter: { _id:"` + parent + `"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }`
 
@@ -354,6 +356,9 @@ function draw() {
             "maxVelocity": 10,
             "minVelocity": 3,
             "timestep": 0.4,
+        },
+        "interaction": { 
+            hover: true 
         }
     };
 
@@ -362,15 +367,25 @@ function draw() {
 
     network.on("click", function (params) {
         if (params.nodes[0] != null) {
-            getRelated(params.nodes[0]);
+            if (params.event.srcEvent.ctrlKey) {
+                window.open(getWikipedia(params.nodes[0]));
+            } else {
+                getRelated(params.nodes[0]);
+            }
+        } 
+    });
+
+    $(document).on('keydown', function (event) {
+        if (event.ctrlKey) {
+            $('#network').css('cursor', 'pointer');
         }
     });
 
-    network.on("doubleClick", function (params) {
-        if (params.nodes[0] != null) {
-            var uri = String(params.nodes[0])
-            window.open(getWikipedia(params.nodes[0]));
+    $(document).on('keyup', function (event) {
+        if (!event.ctrlKey) {
+            $('#network').css('cursor', 'auto');
         }
     });
+
 
 }
