@@ -34,16 +34,14 @@ function start(uri) {
         headers: {
             'Accept': 'application/json',
         }
-    })
-        .then(r => r.json())
-        .then(data => {
-            console.log("fetched names")
-            data.forEach(item => {
-                names_box.append($('<option>').attr('value', decodeURI(item.label)));
-                uris[decodeURI(item.label)] = item._id
-            });
-            init(uri)
+    }).then(r => r.json()).then(data => {
+        console.log("fetched names")
+        data.forEach(item => {
+            names_box.append($('<option>').attr('value', decodeURI(item.label)));
+            uris[decodeURI(item.label)] = item._id
         });
+        init(uri)
+    });
 }
 
 function instruction() {
