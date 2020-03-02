@@ -52,7 +52,7 @@ async function Demo() {
         schema
     });
 
-    app.listen({ port: 4000 }, () =>
+    app.listen({ port: 5000 }, () =>
         console.log("🚀 Server ready")
     );
     
