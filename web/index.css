@@ -1,5 +1,5 @@
 body{        
-    padding-top: 37px;
+    padding-top: 54px;
     padding-bottom: 40px;
 }
 html, body {
@@ -16,7 +16,8 @@ html, body {
 }
 .fixed-header{
     top: 0;
-    min-width: 1300px;
+    min-width: 950px;
+    height: 40px;
 }
 .fixed-footer{
     bottom: 0;
@@ -26,8 +27,9 @@ a {
 }
 #statement {
     margin-right: 20px;
-    margin-top: 3px;
-    float:right;
+    min-width: 100px;
+    max-width: 400px;
+    float: right;
     background-color: #111111;
     color: #BBBBBB;
     outline: none;
@@ -46,19 +48,20 @@ input {
     border-radius: 10px 10px 10px 10px;
     font-size: 14px;
     padding: 5px;
-    height: 23px;
+    height: 27px;
     width: 280px;
     margin-left: 10px;
     float: left;
     color: #333333;
     outline: none;
+    margin-top: 6px;
   }
 button {
     border: 3px black;
     background-color: lightseagreen;
     border-radius: 10px 10px 10px 10px;
     font-size: 14px;
-    height: 23px;
+    height: 27px;
     width: 170px;
     margin-left: 10px;
     text-align: center;
@@ -67,6 +70,7 @@ button {
     color: #333333;
     outline: none;
     cursor: pointer;
+    margin-top: 6px;
 }
 .vis-network {
     outline: none;

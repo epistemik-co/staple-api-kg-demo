@@ -12,6 +12,8 @@ const edgeNames = {
     marriage: "spouse of"
 }
 
+console.log("started!")
+
 var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>.'
 
 function getWikipedia(uri) {
@@ -26,21 +28,45 @@ function getUri(label) {
     return uris[label]
 }
 
+var HttpClient = function() {
+    this.get = function(url, aCallback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() { 
+            if (xhr.readyState == 4 && xhr.status == 200)
+                aCallback(JSON.parse(xhr.responseText));
+        }
+
+        xhr.open( "GET", url, true );            
+        xhr.send( null );
+    }
+    this.post = function(url, body, aCallback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() { 
+            if (xhr.readyState == 4 && xhr.status == 200)
+                aCallback(JSON.parse(xhr.responseText));
+        }
+
+        console.log("Body: " + body)
+        xhr.open( "POST", url, true );            
+        xhr.setRequestHeader('Content-type', 'application/json')
+        xhr.send( body );
+    }
+}
+
+
 function start(uri) {
+
+    var client = new HttpClient();
+
     let names_box = $('#names_box');
 
-    fetch(apiUri + "/people", {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-        }
-    }).then(r => r.json()).then(data => {
-        console.log("fetched names")
-        data.forEach(item => {
+    client.get(apiUri + "/people", function(response) {
+        for (let i = 0; i < response.length; i++) {
+            var item = response[i];
             names_box.append($('<option>').attr('value', decodeURI(item.label)));
             uris[decodeURI(item.label)] = item._id
-        });
-        init(uri)
+          }
+          init(uri)
     });
 }
 
@@ -108,7 +134,6 @@ function visualise(parent, relation, entity) {
             if (entity.description != null) {
                 description = '<div style="white-space:pre-wrap;">' + entity.description + '</div><br>'
             }
-            // description = '<p style="white-space:pre-wrap;">Queen of the United Kingdom of Great Britain and Ireland from 20 June 1837, and the first Empress of India from 1 May 1876, until her death on 22 January 1901. The period centred on her reign is known as the Victorian era.</p><br><br>'
             node.label = decodeURI(entity.label) + year
             node.title = description + '<b>See:</b> ' + getWikipedia(entity._id)
 
@@ -210,13 +235,13 @@ function visualise(parent, relation, entity) {
 
         if (entity[property] != null && typeof entity[property] === 'object' && entity[property].constructor === Array) {
 
-            entity[property].forEach(value => {
-
+            for (let i = 0; i < entity[property].length; i++) {
+                var value = entity[property][i]
 
                 if (value != null && typeof value === 'object' && value.constructor === Object) {
                     visualise(entity._id, property, value)
                 }
-            })
+            }
         }
     }
 
@@ -227,19 +252,12 @@ function init(uri) {
 
     console.log("Searching for: " + uri)
 
-    fetch(apiUri + "/graphql", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({ query: `{ Person(filter:{_id: "` + uri + `"}){ _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } }` })
-    })
-        .then(r => r.json())
-        .then(data => {
-            visualise(null, null, data.data.Person[0]);
-            instruction();
-        });
+    var client = new HttpClient();
+    var body = JSON.stringify({ query: '{ Person(filter:{_id: "' + uri + '"}){ _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } }' })
+    client.post(apiUri + "/graphql", body, function(response) {
+        visualise(null, null, response.data.Person[0]);
+        instruction();
+    });
 };
 
 
@@ -250,21 +268,14 @@ function getRelated(parent) {
         nodes.update({ id: parent, size: 40, expanded: true });
 
         document.getElementById('statement').innerHTML = "Retrieving data. Please wait...";
-        var query = `{ Person(filter: { _id:"` + parent + `"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }`
+        var query = '{ Person(filter: { _id:"' + parent + '"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }'
 
-        fetch(apiUri + "/graphql", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ query: query })
-        })
-            .then(r => r.json())
-            .then(data => {
-                visualise(null, null, data.data.Person[0]);
-                instruction();
-            });
+        var client = new HttpClient();
+        var body = JSON.stringify({ query: query})
+        client.post(apiUri + "/graphql", body, function(response) {
+            visualise(null, null, response.data.Person[0]);
+            instruction();
+        });
     }
 
 };
@@ -284,23 +295,16 @@ function downloadData() {
         }
     }
 
-    var query = `{ _CONTEXT { _id _type Person Country label description gender thumbnail birthYear deathYear birthCountry deathCountry } Person(filter:{_id: [` + people.join(",") + `]}){ _id _type label description gender thumbnail birthYear deathYear parent { _id } child { _id } spouse { _id } birthCountry { _id } deathCountry { _id } } Country(filter:{_id: [` + countries.join(",") + `]}) { _id _type label } } `
+    var query = '{ _CONTEXT { _id _type Person Country label description gender thumbnail birthYear deathYear birthCountry deathCountry } Person(filter:{_id: [' + people.join(",") + ']}){ _id _type label description gender thumbnail birthYear deathYear parent { _id } child { _id } spouse { _id } birthCountry { _id } deathCountry { _id } } Country(filter:{_id: [' + countries.join(",") + ']}) { _id _type label } } '
 
-    fetch(apiUri + "/graphql", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({ query: query })
-    })
-        .then(r => r.json())
-        .then(data => {
+    var client = new HttpClient();
+        var body = JSON.stringify({ query: query})
+        client.post(apiUri + "/graphql", body, function(response) {
             result = {
-                "@context": data.data._CONTEXT,
+                "@context": response.data._CONTEXT,
                 "@id": "@graph",
-                "Person": data.data.Person,
-                "Country": data.data.Country,
+                "Person": response.data.Person,
+                "Country": response.data.Country,
             }
             var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result));
             var dlAnchorElem = document.getElementById('downloadAnchorElem');
