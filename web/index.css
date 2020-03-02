@@ -46,7 +46,7 @@ input {
     padding: 5px;
     height: 23px;
     width: 280px;
-    margin-left: 20px;
+    margin-left: 10px;
     float:left;
     color: #333333;
     outline:none;
@@ -58,7 +58,7 @@ button {
     font-size: 14px;
     height: 23px;
     width: 170px;
-    margin-left: 15px;
+    margin-left: 10px;
     text-align: center;
     text-decoration: none;
     float:left;

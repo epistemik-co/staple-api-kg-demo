@@ -258,30 +258,39 @@ function downloadData() {
 
     for (uri in nodes._data) {
         var item = nodes._data[uri]
-        if (item.type==="person") {
+        if (item.type === "person") {
             people.push('"' + item.id + '"')
         }
-        if (item.type==="country") {
+        if (item.type === "country") {
             countries.push('"' + item.id + '"')
         }
     }
 
-    console.log(people)
-    console.log(countries)
+    var query = `{ _CONTEXT { _id _type Person Country label description gender thumbnail birthYear deathYear birthCountry deathCountry } Person(filter:{_id: [` + people.join(",") + `]}){ _id _type label description gender thumbnail birthYear deathYear parent { _id } child { _id } spouse { _id } birthCountry { _id } deathCountry { _id } } Country(filter:{_id: [` + countries.join(",") + `]}) { _id _type label } } `
 
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(nodes._data));
-    var dlAnchorElem = document.getElementById('downloadAnchorElem');
-    dlAnchorElem.setAttribute("href",     dataStr     );
-    dlAnchorElem.setAttribute("download", "data.json");
-    dlAnchorElem.click();
-
+    fetch(apiUri + "/graphql", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({ query: query })
+    })
+        .then(r => r.json())
+        .then(data => {
+            result = {
+                "@context": data.data._CONTEXT,
+                "@id": "@graph",
+                "Person": data.data.Person,
+                "Country": data.data.Country,
+            }
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result));
+            var dlAnchorElem = document.getElementById('downloadAnchorElem');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "data.json");
+            dlAnchorElem.click();
+        });
 }
-
-
-//draw()
-//
-//Initiates and draws the visjs network.
-
 
 function draw() {
     nodes = new vis.DataSet([]);
@@ -300,7 +309,7 @@ function draw() {
             hoverConnectedEdges: true,
         },
         "edges": {
-            "font": { 
+            "font": {
                 face: 'arial',
                 color: '#FFFFFF',
                 strokeColor: '#000000'
@@ -314,7 +323,7 @@ function draw() {
             }
         },
         "nodes": {
-            "font": { 
+            "font": {
                 face: 'arial',
                 color: '#FFFFFF'
             },
@@ -333,7 +342,7 @@ function draw() {
             },
             "solver": "forceAtlas2Based",
             "maxVelocity": 10,
-            "minVelocity": 2,
+            "minVelocity": 3,
             "timestep": 0.4,
         }
     };
