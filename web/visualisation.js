@@ -58,7 +58,7 @@ function visualise(parent, relation, entity) {
             id: entity._id,
             uri: entity._id,
             next: 0,
-            mass: 2.5,
+            mass: 2.5
         }
 
         if (parent != null) {
@@ -77,6 +77,7 @@ function visualise(parent, relation, entity) {
         } else if (entity._type[0] == "Person") {
             node.size = 30
             node.type = "person"
+            node.expanded = false
             if (entity.thumbnail != null) {
                 node.image = entity.thumbnail
                 node.shape = 'circularImage'
@@ -245,8 +246,8 @@ function init(uri) {
 function getRelated(parent) {
     var parentNode = nodes.get(parent);
 
-    if (parentNode.type == "person") {
-        nodes.update({ id: parent, size: 40 });
+    if (parentNode.type == "person" && !parentNode.expanded) {
+        nodes.update({ id: parent, size: 40, expanded: true });
 
         document.getElementById('statement').innerHTML = "Retrieving data. Please wait...";
         var query = `{ Person(filter: { _id:"` + parent + `"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }`
@@ -386,6 +387,4 @@ function draw() {
             $('#network').css('cursor', 'auto');
         }
     });
-
-
 }
