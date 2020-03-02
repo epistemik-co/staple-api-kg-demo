@@ -197,9 +197,11 @@ function visualise(parent, relation, entity) {
             }
         }
         try {
-            edges.add(edge);
+            if (edges.get(edge.id) == null) {
+                edges.add(edge);
+            }
         }
-        catch (err) { console.log("Error when visualising edge: " + JSON.stringify(entity)) };
+        catch (err) { console.log("Error when visualising edge: " + JSON.stringify(edge)) };
     }
 
     for (var property in entity) {

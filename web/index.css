@@ -30,13 +30,13 @@ a {
     float:right;
     background-color: #111111;
     color: #BBBBBB;
-    outline:none;
+    outline: none;
 }
 #network {      
     width: 99%;
     height: 100%;
     margin-left: 0.5%;
-    outline:none;
+    outline: none
 }
 #statement2 {
     color: #BBBBBB;
@@ -49,9 +49,9 @@ input {
     height: 23px;
     width: 280px;
     margin-left: 10px;
-    float:left;
+    float: left;
     color: #333333;
-    outline:none;
+    outline: none;
   }
 button {
     border: 3px black;
@@ -63,10 +63,13 @@ button {
     margin-left: 10px;
     text-align: center;
     text-decoration: none;
-    float:left;
+    float: left;
     color: #333333;
-    outline:none;
-    cursor:pointer;
+    outline: none;
+    cursor: pointer;
+}
+.vis-network {
+    outline: none;
 }
 .loader {
     position: fixed;
