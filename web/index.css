@@ -66,3 +66,28 @@ button {
     outline:none;
     cursor:pointer;
 }
+.loader {
+    position: fixed;
+    border: 16px solid lightseagreen;
+    border-radius: 50%;
+    border-top: 16px solid #111111 ;
+    width: 6vw;
+    height: 6vw;
+    top: 50%;
+    left: 50%;
+    margin-top: -3vw; /* Negative half of height. */
+    margin-left: -3vw; 
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

@@ -26,7 +26,7 @@ function getUri(label) {
     return uris[label]
 }
 
-function start() {
+function start(uri) {
     let names_box = $('#names_box');
 
     fetch(apiUri + "/people", {
@@ -42,6 +42,7 @@ function start() {
                 names_box.append($('<option>').attr('value', decodeURI(item.label)));
                 uris[decodeURI(item.label)] = item._id
             });
+            init(uri)
         });
 }
 
@@ -364,4 +365,3 @@ function draw() {
     });
 
 }
-

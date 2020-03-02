@@ -12,7 +12,7 @@
 
 </head>
 
-<body onload="init('http://dbpedia.org/resource/Elizabeth_II'); start();">
+<body onload="start('http://dbpedia.org/resource/Elizabeth_II');">
         <div class="fixed-header">
                 <div>
                         <input id="input_box" list="names_box" onchange="init(getUri(value))" value="Elizabeth II"
@@ -24,7 +24,7 @@
                 <div align="center" vertical-align= "middle" id="statement">Loading, please wait...</div>
                 
         </div>
-        <div id="network"></div>
+        <div id="network"><div class="loader"></div></div>
         <div class="fixed-footer">
                 <div align="center" id="statement2">Dataset by <a href="http://dbpedia.org">DBpedia</a>. Graph visualisation by <a href="http://visjs.org">vis.js</a>. Knowledge graph management by <a href="http://staple-api.org">Staple API</a>. <br> <a href="http://epistemik.co">Epistemik</a> 2020</div>
         </div>
