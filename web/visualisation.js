@@ -107,9 +107,9 @@ function visualise(parent, relation, entity) {
 
             var description = ""
             if (entity.description != null) {
-                description = entity.description + "<br><br>"
+                description = '<div style="white-space:pre-wrap;">' + entity.description + '</div><br><br>'
             }
-
+            // description = '<p style="white-space:pre-wrap;">Queen of the United Kingdom of Great Britain and Ireland from 20 June 1837, and the first Empress of India from 1 May 1876, until her death on 22 January 1901. The period centred on her reign is known as the Victorian era.</p><br><br>'
             node.label = decodeURI(entity.label) + year
             node.title = description + '<b>See:</b> ' + getWikipedia(entity._id)
 
@@ -131,6 +131,11 @@ function visualise(parent, relation, entity) {
                 label: edgeNames.parenthood,
                 arrows: {
                     to: true
+                },
+                color: {
+                    color: '#983131',
+                    hover: "#E74E4E",
+                    highlight: "#E74E4E"
                 }
             }
         }
@@ -142,6 +147,11 @@ function visualise(parent, relation, entity) {
                 label: edgeNames.parenthood,
                 arrows: {
                     to: true
+                },
+                color: {
+                    color: '#983131',
+                    hover: "#E74E4E",
+                    highlight: "#E74E4E"
                 }
             }
         }
@@ -158,7 +168,9 @@ function visualise(parent, relation, entity) {
                     to: true
                 },
                 color: {
-                    color: '#543A71'
+                    color: '#543A71',
+                    hover: "#A573DC",
+                    highlight: "#A573DC"
                 }
             }
         }
@@ -176,7 +188,9 @@ function visualise(parent, relation, entity) {
                         to: true
                     },
                     "color": {
-                        color: '#0E4E4A'
+                        color: '#0E4E4A',
+                        highlight: '#1FA29A',
+                        hover:  '#1FA29A'
                     }
                 }
             }
@@ -316,12 +330,7 @@ function draw() {
                 strokeColor: '#000000'
             },
             "width": 8,
-            "length": 20,
-            "color": {
-                color: '#983131',
-                highlight: '#0C4C8C',
-                hover: '#0C4C8C'
-            }
+            "length": 20
         },
         "nodes": {
             "font": {
@@ -331,8 +340,8 @@ function draw() {
             "borderWidth": 10,
             "color": {
                 border: '#983131',
-                highlight: '#0C4C8C',
-                hover: '#0C4C8C'
+                highlight: '#E74E4E',
+                hover: '#E74E4E'
             }
         },
         "physics": {

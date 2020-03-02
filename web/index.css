@@ -71,12 +71,12 @@ button {
     border: 16px solid lightseagreen;
     border-radius: 50%;
     border-top: 16px solid #111111 ;
-    width: 6vw;
-    height: 6vw;
+    width: 10vh;
+    height: 10vh;
     top: 50%;
     left: 50%;
-    margin-top: -3vw; /* Negative half of height. */
-    margin-left: -3vw; 
+    margin-top: -5vh; /* Negative half of height. */
+    margin-left: -5vh; 
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
   }
