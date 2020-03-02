@@ -13,12 +13,14 @@
 
 <body onload="init('http://dbpedia.org/resource/Elizabeth_II'); start();">
         <div class="fixed-header">
-                <div align="center">
+                <div>
                         <input id="input_box" list="names_box" onchange="init(getUri(value))" value="Elizabeth II"
                                 onclick="value=''" />
                         <datalist id="names_box"></datalist>
                 </div>
-                <div align="center" id="statement">Loading, please wait...</div>
+                <button type="button" onclick="downloadData()">Download data</button>
+                <a id="downloadAnchorElem" style="display:none"></a>
+                <div align="center" vertical-align= "middle" id="statement">Loading, please wait...</div>
                 
         </div>
         <div id="network"></div>

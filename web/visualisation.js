@@ -173,7 +173,7 @@ function visualise(parent, relation, entity) {
                         to: true
                     },
                     "color": {
-                        color: '#3A4B3A'
+                        color: '#0E4E4A'
                     }
                 }
             }
@@ -250,6 +250,18 @@ function getRelated(parent) {
 
 };
 
+function downloadData() {
+
+    // var people = []
+    // var countries = []
+
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(nodes._data));
+    var dlAnchorElem = document.getElementById('downloadAnchorElem');
+    dlAnchorElem.setAttribute("href",     dataStr     );
+    dlAnchorElem.setAttribute("download", "data.json");
+    dlAnchorElem.click();
+
+}
 
 
 //draw()
@@ -301,13 +313,13 @@ function draw() {
         },
         "physics": {
             "forceAtlas2Based": {
-                "centralGravity": 0.006,
+                "centralGravity": 0.007,
                 "springConstant": 0.09,
-                "damping": 0.8
+                "damping": 0.9
             },
             "solver": "forceAtlas2Based",
             "maxVelocity": 10,
-            "minVelocity": 1,
+            "minVelocity": 2,
             "timestep": 0.4,
         }
     };

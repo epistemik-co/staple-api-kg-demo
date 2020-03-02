@@ -1,5 +1,5 @@
 body{        
-    padding-top: 33px;
+    padding-top: 37px;
     padding-bottom: 40px;
 }
 html, body {
@@ -11,35 +11,58 @@ html, body {
     position: fixed;        
     background-color: #111111;
     margin-left: -8px;
-    padding: 10px;
+    padding: 11px;
     color: #fff;
 }
 .fixed-header{
     top: 0;
-    min-width: 1200px;
+    min-width: 1300px;
 }
 .fixed-footer{
     bottom: 0;
 }    
-#input_box {
-    width: 280px;
-    margin-left: 20px;
-    float:left;
-    color: #333333;
-}
 a {
     color: lightseagreen
 }
 #statement {
     margin-right: 20px;
+    margin-top: 3px;
     float:right;
     background-color: #111111;
     color: #BBBBBB;
 }
 #network {      
-    width: 100%;
+    width: 99%;
     height: 100%;
+    margin-left: 0.5%;
 }
 #statement2 {
     color: #BBBBBB;
+}
+input {
+    border: 2px solid lightseagreen;
+    border-radius: 10px 10px 10px 10px;
+    font-size: 14px;
+    padding: 5px;
+    height: 23px;
+    width: 280px;
+    margin-left: 20px;
+    float:left;
+    color: #333333;
+    outline:none;
+  }
+button {
+    border: 3px black;
+    background-color: lightseagreen;
+    border-radius: 10px 10px 10px 10px;
+    font-size: 14px;
+    height: 23px;
+    width: 170px;
+    margin-left: 15px;
+    text-align: center;
+    text-decoration: none;
+    float:left;
+    color: #333333;
+    outline:none;
+    cursor:pointer;
 }
