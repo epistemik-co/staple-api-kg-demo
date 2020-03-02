@@ -6,12 +6,12 @@ const ontology = {
     file: "./ontology.ttl" 
 };
 
-const config = {
-    type: "mongodb",
-    url: "mongodb://127.0.0.1:27017", 
-    dbName: "staple",
-    collectionName: "staple",
-};
+// const config = {
+//     type: "mongodb",
+//     url: "mongodb://127.0.0.1:27017", 
+//     dbName: "staple",
+//     collectionName: "staple",
+// };
 
 // let config = {
 //     type: "sparql",
@@ -20,12 +20,12 @@ const config = {
 //     graphName: "http://dbpedia.org"
 // };
 
-// const config = {
-//     type: "mongodb",
-//     url: "mongodb+srv://guest:guest@cluster0-ek2ca.mongodb.net/test", 
-//     dbName: "staple",
-//     collectionName: "staple",
-// };
+const config = {
+    type: "mongodb",
+    url: "mongodb+srv://guest:guest@cluster0-ek2ca.mongodb.net/test", 
+    dbName: "staple",
+    collectionName: "staple",
+};
 
 async function Demo() {
     
