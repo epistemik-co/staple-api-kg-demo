@@ -3,7 +3,7 @@ const { ApolloServer } = require("apollo-server-express");
 const staple = require("staple-api");
 
 const ontology = {
-    file: "./ontology.ttl" 
+    file: "./docs/ontology.ttl" 
 };
 
 // const config = {
@@ -30,7 +30,7 @@ const config = {
 async function Demo() {
     
     const app = express();
-    app.use(express.static("web"))
+    app.use(express.static("docs"))
     
     const stapleApi = await staple(ontology, config);
     const schema = stapleApi.schema
