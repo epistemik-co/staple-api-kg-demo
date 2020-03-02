@@ -43,6 +43,7 @@ async function Demo() {
         });
 
     app.get('/people', function (req, res) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.send(people)
       })
 

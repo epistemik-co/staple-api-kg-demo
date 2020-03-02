@@ -1,3 +1,5 @@
+var apiUri = "http://playground.staple-api.org:5000"
+
 var nodes, edges, network;
 
 var uris = {}
@@ -27,7 +29,7 @@ function getUri(label) {
 function start() {
     let names_box = $('#names_box');
 
-    fetch("/people", {
+    fetch(apiUri + "/people", {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -209,7 +211,7 @@ function init(uri) {
 
     console.log("Searching for: " + uri)
 
-    fetch("/graphql", {
+    fetch(apiUri + "/graphql", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -229,11 +231,10 @@ function getRelated(parent) {
     var parentNode = nodes.get(parent);
 
     if (parentNode.type == "person") {
-        // successor { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } predecessor { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } }
         document.getElementById('statement').innerHTML = "Retrieving data. Please wait...";
         var query = `{ Person(filter: { _id:"` + parent + `"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }`
 
-        fetch("/graphql", {
+        fetch(apiUri + "/graphql", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -252,8 +253,21 @@ function getRelated(parent) {
 
 function downloadData() {
 
-    // var people = []
-    // var countries = []
+    var people = []
+    var countries = []
+
+    for (uri in nodes._data) {
+        var item = nodes._data[uri]
+        if (item.type==="person") {
+            people.push('"' + item.id + '"')
+        }
+        if (item.type==="country") {
+            countries.push('"' + item.id + '"')
+        }
+    }
+
+    console.log(people)
+    console.log(countries)
 
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(nodes._data));
     var dlAnchorElem = document.getElementById('downloadAnchorElem');
