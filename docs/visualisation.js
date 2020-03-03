@@ -197,13 +197,14 @@ function visualise(parent, relation, entity) {
         }
         if (relation == "birthCountry" || relation == "deathCountry") {
             var edgeId = parent + "_country_" + entity._id;
-            if (edges.get(edgeId) != null) {
+            if (edges.get(edgeId) != null && !edges.get(edgeId).rels.includes(relation)) {
                 edges.update([{ id: edgeId, label: edgeNames.both }]);
             } else {
                 edge = {
                     id: edgeId,
                     from: parent,
                     to: entity._id,
+                    rels: [relation],
                     label: edgeNames[relation],
                     arrows: {
                         to: true
