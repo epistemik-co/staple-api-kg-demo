@@ -11,6 +11,8 @@ const edgeNames = {
 }
 
 var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>.'
+var retrievalText = "Retrieving data. Please wait...";
+var noMoreDataText = "No more data found...";
 
 function getWikipedia(uri) {
     return uri.replace("http://dbpedia.org/resource/", "https://en.wikipedia.org/wiki/")
@@ -67,7 +69,7 @@ function start(uri) {
 }
 
 function instruction() {
-    document.getElementById('statement').innerHTML = "No more data found..." ;
+    document.getElementById('statement').innerHTML = noMoreDataText ;
     setTimeout(function () { document.getElementById('statement').innerHTML = instructionText }, 1000);
 };
 
@@ -247,7 +249,7 @@ function visualise(parent, relation, entity) {
 function init(uri) {
     draw();
 
-    console.log("Searching for: " + uri)
+    document.getElementById('statement').innerHTML = retrievalText;
 
     var client = new HttpClient();
     var body = JSON.stringify({ query: '{ Person(filter:{_id: "' + uri + '"}){ _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } }' })
@@ -264,7 +266,7 @@ function getRelated(parent) {
     if (parentNode.type == "person" && !parentNode.expanded) {
         nodes.update({ id: parent, size: 40, expanded: true });
 
-        document.getElementById('statement').innerHTML = "Retrieving data. Please wait...";
+        document.getElementById('statement').innerHTML = retrievalText;
         var query = '{ Person(filter: { _id:"' + parent + '"}) { _id child { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } parent { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } spouse { _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } } }'
 
         var client = new HttpClient();
