@@ -26,9 +26,10 @@ a {
     color: lightseagreen
 }
 #statement {
+    height: 80%;
     margin-right: 20px;
     min-width: 100px;
-    max-width: 400px;
+    max-width: 440px;
     float: right;
     background-color: #111111;
     color: #BBBBBB;
