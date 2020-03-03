@@ -386,7 +386,7 @@ function draw() {
           });
 
           $('#names_box').select2({
-            minimumInputLength: 3 // only start searching when the user has input 3 or more characters
+            minimumInputLength: 4
           });
     });
 
