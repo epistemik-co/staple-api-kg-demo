@@ -245,13 +245,13 @@ function visualise(parent, relation, entity) {
 }
 
 function init(uri) {
-    draw();
 
     document.getElementById('statement').innerHTML = retrievalText;
 
     var client = new HttpClient();
     var body = JSON.stringify({ query: '{ Person(filter:{_id: "' + uri + '"}){ _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } }' })
     client.post(apiUri + "/graphql", body, function(response) {
+        draw();
         visualise(null, null, response.data.Person[0]);
         instruction();
     });
