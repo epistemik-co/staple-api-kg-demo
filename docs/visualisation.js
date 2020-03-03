@@ -2,8 +2,6 @@ var apiUri = "http://playground.staple-api.org:5000"
 
 var nodes, edges, network;
 
-var uris = {}
-
 const edgeNames = {
     birthCountry: "country of birth",
     deathCountry: "country of death",
@@ -20,10 +18,6 @@ function getWikipedia(uri) {
 
 function getDBpedia(uri) {
     return uri.replace("https://en.wikipedia.org/wiki/", "http://dbpedia.org/resource/")
-}
-
-function getUri(label) {
-    return uris[label]
 }
 
 var HttpClient = function() {
@@ -61,11 +55,15 @@ function start(uri) {
     client.get(apiUri + "/people", function(response) {
         for (let i = 0; i < response.length; i++) {
             var item = response[i];
-            names_box.append($('<option>').attr('value', decodeURI(item.label)));
-            uris[decodeURI(item.label)] = item._id
+            names_box.append($('<option></option>').attr('value', item._id).text(item.label));
           }
+          $("#names_box").select2();
+
+          names_box.val("http://dbpedia.org/resource/Elizabeth_II")
+          names_box.select2().trigger('change');
           init(uri)
     });
+
 }
 
 function instruction() {
@@ -379,6 +377,17 @@ function draw() {
         } 
     });
 
+    
+    $(document).ready(function(){
+        $('#names_box').on('select2:select', function (e) {
+            init($('#names_box').val())
+          });
+
+          $('#names_box').select2({
+            minimumInputLength: 3 // only start searching when the user has input 3 or more characters
+          });
+    });
+
     $(document).on('keydown', function (event) {
         if (event.ctrlKey) {
             $('#network').css('cursor', 'pointer');
@@ -390,4 +399,7 @@ function draw() {
             $('#network').css('cursor', 'auto');
         }
     });
+
+
+
 }

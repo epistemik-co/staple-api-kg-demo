@@ -3,21 +3,23 @@
 <head>
         <title>Noble Connections</title>
 
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.js"></script>
         <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.css" rel="stylesheet" />
         <script type="text/javascript" src="visualisation.js"></script>
         <link type="text/css" href="index.css" rel="stylesheet"/>
         <link rel="shortcut icon" href="favicon.ico"/>
+<!-- Script -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 </head>
 
 <body onload="start('http://dbpedia.org/resource/Elizabeth_II');">
         <div class="fixed-header">
-                <div>
-                        <input id="input_box" list="names_box" onchange="init(getUri(value))" value="Elizabeth II"
-                                onclick="value=''" />
-                        <datalist id="names_box"></datalist>
+                <div id="frame">
+                        <select id="names_box" class="selectpicker" data-live-search="true"></select>
                 </div>
                 <button type="button" onclick="downloadData()">Download data</button>
                 <a id="downloadAnchorElem" style="display:none"></a>

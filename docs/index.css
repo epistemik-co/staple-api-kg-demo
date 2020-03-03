@@ -28,7 +28,7 @@ a {
 #statement {
     height: 80%;
     margin-right: 20px;
-    margin-top: 4px;
+    margin-top: 3px;
     min-width: 100px;
     max-width: 440px;
     float: right;
@@ -45,25 +45,26 @@ a {
 #statement2 {
     color: #BBBBBB;
 }
-input {
+#frame {
+    width: 280px; 
+    height: 27px;
+    overflow: hidden;
     border: 2px solid lightseagreen;
     border-radius: 10px 10px 10px 10px;
-    font-size: 14px;
-    padding: 5px;
-    height: 27px;
-    width: 280px;
     margin-left: 10px;
+    margin-top: 4px;
     float: left;
-    color: #333333;
-    outline: none;
-    margin-top: 6px;
+}
+#names_box {
+    width: 280px;
+    height: 27px;
   }
 button {
     border: 3px black;
     background-color: lightseagreen;
     border-radius: 10px 10px 10px 10px;
     font-size: 14px;
-    height: 27px;
+    height: 31px;
     width: 170px;
     margin-left: 10px;
     text-align: center;
@@ -72,7 +73,7 @@ button {
     color: #333333;
     outline: none;
     cursor: pointer;
-    margin-top: 6px;
+    margin-top: 4px;
 }
 .vis-network {
     outline: none;
