@@ -31,13 +31,13 @@
           schema:rangeIncludes xsd:string .
 
       dct:description a rdf:Property, owl:FunctionalProperty ;
-          rdfs:comment "Description of an entity" ;
-          schema:domainIncludes owl:Thing ;
+          rdfs:comment "Description of a person" ;
+          schema:domainIncludes dbo:Person ;
           schema:rangeIncludes xsd:string .
 
       dbo:thumbnail a rdf:Property, owl:FunctionalProperty ;
           rdfs:comment "Thumbnail URL" ;
-          schema:domainIncludes owl:Thing ;
+          schema:domainIncludes dbo:Person ;
           schema:rangeIncludes xsd:string .
 
       dbo:birthYear a rdf:Property, owl:FunctionalProperty ;

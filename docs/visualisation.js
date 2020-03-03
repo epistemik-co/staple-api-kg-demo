@@ -1,4 +1,5 @@
-var apiUri = "http://playground.staple-api.org:5000"
+// var apiUri = "http://playground.staple-api.org:5000"
+var apiUri = "http://localhost:5000"
 
 var nodes, edges, network;
 
@@ -11,8 +12,6 @@ const edgeNames = {
     parenthood: "parent of",
     marriage: "spouse of"
 }
-
-console.log("started!")
 
 var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>.'
 
@@ -71,6 +70,7 @@ function start(uri) {
 }
 
 function instruction() {
+    document.getElementById('statement').innerHTML = "No more data found..." ;
     setTimeout(function () { document.getElementById('statement').innerHTML = instructionText }, 1000);
 };
 
