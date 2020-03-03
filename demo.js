@@ -38,7 +38,10 @@ async function Demo() {
     let people = []
     console.log("Fetching people's names...")
     await stapleApi.graphql('{ Person { _id label } }').then((response) => {
-        people = response.data.Person;
+        pips = response.data.Person;
+        pips.forEach(element => {
+            people.push({id: element._id, text:element.label})
+        });
         console.log("All fetched...")
         });
 

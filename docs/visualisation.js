@@ -40,7 +40,6 @@ var HttpClient = function() {
                 aCallback(JSON.parse(xhr.responseText));
         }
 
-        console.log("Body: " + body)
         xhr.open( "POST", url, true );            
         xhr.setRequestHeader('Content-type', 'application/json')
         xhr.send( body );
@@ -55,11 +54,10 @@ function start(uri) {
     let names_box = $('#names_box');
 
     client.get(apiUri + "/people", function(response) {
-        for (let i = 0; i < response.length; i++) {
-            var item = response[i];
-            names_box.append($('<option></option>').attr('value', item._id).text(item.label));
-          }
-          $("#names_box").select2();
+
+          $("#names_box").select2({
+              data: response
+          });
 
           names_box.val("http://dbpedia.org/resource/Elizabeth_II")
           names_box.select2().trigger('change');

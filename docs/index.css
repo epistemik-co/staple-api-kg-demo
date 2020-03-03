@@ -56,8 +56,10 @@ a {
     float: left;
 }
 #names_box {
-    width: 280px;
-    height: 27px;
+    margin-left: -1px;
+    margin-top: -2px;
+    width: 282px;
+    height: 29px;
   }
 button {
     border: 3px black;
