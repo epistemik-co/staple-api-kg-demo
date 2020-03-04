@@ -1,7 +1,7 @@
 {
-  "name": "Staple API demo",
+  "name": "staple-api-kg-demo",
   "version": "1.0.0",
-  "description": "A knowledge graph app in 15 min",
+  "description": "A knowledge graph app demo built using Staple API on top of MongoDB",
   "main": "demo.js",
   "directories": {
     "doc": "docs"
