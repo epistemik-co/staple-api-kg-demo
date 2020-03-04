@@ -10,7 +10,7 @@ const edgeNames = {
     marriage: "spouse of"
 }
 
-var instructionText = 'Use the searchbox to <b>find people by names</b>. Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>.'
+var instructionText = 'Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>. SHIFT+click to <b>delete nodes</b>.'
 var retrievalText = "Retrieving data. Please wait...";
 var noMoreDataText = "No more data found...";
 
@@ -56,8 +56,6 @@ function start() {
     } else {
         param = decodeURI(uriEncoded)
     }
-
-    console.log(param)
 
     var client = new HttpClient();
 
@@ -258,11 +256,11 @@ function visualise(parent, relation, entity) {
 function init(uri) {
 
     document.getElementById('statement').innerHTML = retrievalText;
-
+    draw();
     var client = new HttpClient();
     var body = JSON.stringify({ query: '{ Person(filter:{_id: "' + uri + '"}){ _id _type label description gender thumbnail birthYear deathYear birthCountry { _id _type label } deathCountry { _id _type label } } }' })
     client.post(apiUri + "/graphql", body, function(response) {
-        draw();
+        
         visualise(null, null, response.data.Person[0]);
         instruction();
     });
@@ -383,12 +381,16 @@ function draw() {
         if (params.nodes[0] != null) {
             if (params.event.srcEvent.ctrlKey) {
                 window.open(getWikipedia(params.nodes[0]));
+            } if (params.event.srcEvent.shiftKey) {
+                // nodes.update([{id:params.nodes[0], hidden: true, physics:false}])
+                network.selectNodes([params.nodes[0]])
+                network.deleteSelected()
+
             } else {
                 getRelated(params.nodes[0]);
             }
         } 
     });
-
     
     $(document).ready(function(){
         $('#names_box').on('select2:select', function (e) {
@@ -404,11 +406,12 @@ function draw() {
         if (event.ctrlKey) {
             $('#network').css('cursor', 'pointer');
         }
+        if (event.shiftKey) {
+            $('#network').css('cursor', 'not-allowed');
+        }
     });
 
     $(document).on('keyup', function (event) {
-        if (!event.ctrlKey) {
-            $('#network').css('cursor', 'auto');
-        }
+        $('#network').css('cursor', 'auto');
     });
 }
