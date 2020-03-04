@@ -47,7 +47,17 @@ var HttpClient = function() {
 }
 
 
-function start(uri) {
+function start() {
+
+    var uriEncoded = location.search.split('uri=')[1];
+
+    if (uriEncoded==null) {
+        param = "http://dbpedia.org/resource/Elizabeth_II"
+    } else {
+        param = decodeURI(uriEncoded)
+    }
+
+    console.log(param)
 
     var client = new HttpClient();
 
@@ -59,9 +69,9 @@ function start(uri) {
               data: response
           });
 
-          names_box.val("http://dbpedia.org/resource/Elizabeth_II")
+          names_box.val(param)
           names_box.select2().trigger('change');
-          init(uri)
+          init(param)
     });
 
 }
