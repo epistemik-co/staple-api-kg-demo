@@ -18,10 +18,26 @@ async function Demo() {
     const app = express();
     app.use(express.static("docs"))
     
+    // creating staple-api wrapped into ApolloServer
+
     const stapleApi = await staple(ontology, config);
     const schema = stapleApi.schema
 
+    const path = "/graphql"
+    const server = new ApolloServer({
+        schema
+    });
+
+    app.listen({ port: 5000 }, () =>
+        console.log("🚀 Server ready")
+    );
+    
+    server.applyMiddleware({ app, path });
+
+    // creating endpoint serving the list of all people and their names for FE indexing
+
     let people = []
+
     console.log("Fetching people's names...")
     await stapleApi.graphql('{ Person { _id label } }').then((response) => {
         pips = response.data.Person;
@@ -36,16 +52,7 @@ async function Demo() {
         res.send(people)
       })
 
-    const path = "/graphql"
-    const server = new ApolloServer({
-        schema
-    });
-
-    app.listen({ port: 5000 }, () =>
-        console.log("🚀 Server ready")
-    );
     
-    server.applyMiddleware({ app, path });
 }
 
 Demo()
