@@ -38,7 +38,6 @@ async function Demo() {
     // exnabling FE, Staple API and people names via express server
 
     const app = express();
-    app.use(express.static("docs"))
 
     app.get('/people', function (req, res) {
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -55,6 +54,8 @@ async function Demo() {
     app.listen({ port: 5000 }, () =>
         console.log("🚀 Server ready")
     );
+
+    app.use(express.static("docs"))
 }
 
 Demo()
