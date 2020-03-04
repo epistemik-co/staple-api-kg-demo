@@ -87,7 +87,8 @@ function visualise(parent, relation, entity) {
             id: entity._id,
             uri: entity._id,
             next: 0,
-            mass: 2.5
+            mass: 2.5,
+            hidden: false
         }
 
         if (parent != null) {
@@ -293,10 +294,10 @@ function downloadData() {
 
     for (uri in nodes._data) {
         var item = nodes._data[uri]
-        if (item.type === "person") {
+        if (item.type === "person" && item.hidden==false) {
             people.push('"' + item.id + '"')
         }
-        if (item.type === "country") {
+        if (item.type === "country" && item.hidden==false) {
             countries.push('"' + item.id + '"')
         }
     }
@@ -383,10 +384,9 @@ function draw() {
             if (params.event.srcEvent.ctrlKey) {
                 window.open(getWikipedia(params.nodes[0]));
             } if (params.event.srcEvent.shiftKey) {
-                // nodes.update([{id:params.nodes[0], hidden: true, physics:false}])
+                nodes.update([{id:params.nodes[0], hidden: true}])
                 network.selectNodes([params.nodes[0]])
                 network.deleteSelected()
-
             } else {
                 getRelated(params.nodes[0]);
             }
