@@ -353,6 +353,7 @@ function draw() {
             },
             "borderWidth": 10,
             "color": {
+                background: '#888888',
                 border: '#983131',
                 highlight: '#E74E4E',
                 hover: '#E74E4E'
