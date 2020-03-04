@@ -1,15 +1,13 @@
 <!DOCTYPE html lang="en">
 <html lang="en">
+
 <head>
         <title>Noble Connections</title>
-
-        <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.js"></script>
         <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.css" rel="stylesheet" />
         <script type="text/javascript" src="visualisation.js"></script>
-        <link type="text/css" href="index.css" rel="stylesheet"/>
-        <link rel="shortcut icon" href="favicon.ico"/>
-<!-- Script -->
+        <link type="text/css" href="index.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="favicon.ico" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
@@ -18,21 +16,20 @@
 
 <body onload="start();">
         <div class="fixed-header">
-                <div id="frame">
-                        <select id="names_box" class="selectpicker" data-live-search="true"></select>
-                </div>
+                <div id="frame"> <select id="names_box" class="selectpicker" data-live-search="true"></select> </div>
                 <button type="button" onclick="downloadData()">Download data</button>
-                <a id="downloadAnchorElem" style="display:none"></a>
-   
-                <div id="statement">Loading, please wait...</div>            
-
-                
-                
+                <div id="statement">Loading, please wait...</div>
         </div>
-        <div id="network"><div class="loader"></div></div>
+
+        <div id="network">
+                <div class="loader"></div>
+        </div>
+
         <div class="fixed-footer">
-                <div align="center" id="statement2">Dataset by <a href="http://dbpedia.org">DBpedia</a>. Graph visualisation by <a href="http://visjs.org">vis.js</a>. Knowledge graph management by <a href="http://staple-api.org">Staple API</a>. <br> <a href="http://epistemik.co">Epistemik</a> 2020</div>
+                <div align="center" id="statement2">Dataset by <a href="http://dbpedia.org">DBpedia</a>. Graph
+                        visualisation by <a href="http://visjs.org">vis.js</a>. Knowledge graph management by <a
+                                href="http://staple-api.org">Staple API</a>. <br> <a
+                                href="http://epistemik.co">Epistemik</a> 2020</div>
         </div>
 </body>
-
 </html>
