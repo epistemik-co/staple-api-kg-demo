@@ -38,15 +38,7 @@ async function Demo() {
 
     const path = "/graphql"
     const server = new ApolloServer({
-        schema,
-        formatResponse: (response) => {
-            response.data = {
-                ...response.data,
-                "@id": "@graph",
-                "@context": stapleApi.context
-            }    
-            return response;
-        }
+        schema
     });
 
     app.listen({ port: 5000 }, () =>

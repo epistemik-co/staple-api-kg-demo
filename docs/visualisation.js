@@ -303,8 +303,23 @@ function downloadData() {
         }
     }
 
-    var query = '{ Person(filter:{_id: [' + people.join(",") + ']}){ _id _type label description gender thumbnail birthYear deathYear parent { _id } child { _id } spouse { _id } birthCountry { _id } deathCountry { _id } } Country(filter:{_id: [' + countries.join(",") + ']}) { _id _type label } }'
-    window.open(apiUri + "/graphql?query=" + encodeURIComponent(query))
+    var query = '{ _CONTEXT { _id _type Person Country label description gender thumbnail birthYear deathYear birthCountry deathCountry } Person(filter:{_id: [' + people.join(",") + ']}){ _id _type label description gender thumbnail birthYear deathYear parent { _id } child { _id } spouse { _id } birthCountry { _id } deathCountry { _id } } Country(filter:{_id: [' + countries.join(",") + ']}) { _id _type label } } '
+    
+    var client = new HttpClient();	
+        var body = JSON.stringify({ query: query})	
+        client.post(apiUri + "/graphql", body, function(response) {	
+            result = {	
+                "@context": response.data._CONTEXT,	
+                "@id": "@graph",	
+                "Person": response.data.Person,	
+                "Country": response.data.Country,	
+            }	
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result));	
+            var dlAnchorElem = document.getElementById('downloadAnchorElem');	
+            dlAnchorElem.setAttribute("href", dataStr);	
+            dlAnchorElem.setAttribute("download", "data.json");	
+            dlAnchorElem.click();	
+        });	
 
 }
 
