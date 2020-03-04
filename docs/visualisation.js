@@ -207,7 +207,7 @@ function visualise(parent, relation, entity) {
         }
         if (relation == "birthCountry" || relation == "deathCountry") {
             var edgeId = parent + "_country_" + entity._id;
-            if (edges.get(edgeId) != null && !edges.get(edgeId).rels.includes(relation)) {
+            if (edges.get(edgeId) != null && edges.get(edgeId).rels.indexOf(relation)==-1) {
                 edges.update([{ id: edgeId, label: edgeNames.both }]);
             } else {
                 edge = {
@@ -411,7 +411,4 @@ function draw() {
             $('#network').css('cursor', 'auto');
         }
     });
-
-
-
 }
