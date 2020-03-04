@@ -6,20 +6,6 @@ const ontology = {
     file: "./docs/ontology.ttl" 
 };
 
-// const config = {
-//     type: "mongodb",
-//     url: "mongodb://127.0.0.1:27017", 
-//     dbName: "staple",
-//     collectionName: "staple",
-// };
-
-// let config = {
-//     type: "sparql",
-//     url: "http://dbpedia.org/sparql", 
-//     updateUrl: "http://dbpedia.org/sparql",
-//     graphName: "http://dbpedia.org"
-// };
-
 const config = {
     type: "mongodb",
     url: "mongodb+srv://guest:guest@cluster0-ek2ca.mongodb.net/test", 
@@ -52,7 +38,15 @@ async function Demo() {
 
     const path = "/graphql"
     const server = new ApolloServer({
-        schema
+        schema,
+        formatResponse: (response) => {
+            response.data = {
+                ...response.data,
+                "@id": "@graph",
+                "@context": stapleApi.context
+            }    
+            return response;
+        }
     });
 
     app.listen({ port: 5000 }, () =>
