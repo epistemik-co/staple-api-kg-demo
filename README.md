@@ -1,6 +1,6 @@
-# "Noble Connections" - Staple API demo
+# Noble Connections - Staple API demo
 
-"Noble Connections" is a knowledge graph app built using [Staple API](http://staple-api.org) on top of MongoDB. 
+**Noble Connections** is a knowledge graph app demo built using [Staple API](http://staple-api.org) on top of MongoDB. 
 
 
 # Live version
