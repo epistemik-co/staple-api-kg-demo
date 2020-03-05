@@ -294,30 +294,43 @@ function downloadData() {
     for (uri in nodes._data) {
         var item = nodes._data[uri]
         if (item.type === "person") {
-            people.push('"' + item.id + '"')
+            people.push(item.id)
         }
         if (item.type === "country") {
-            countries.push('"' + item.id + '"')
+            countries.push(item.id)
         }
     }
 
-    var query = '{ _CONTEXT { _id _type Person Country label description gender thumbnail birthYear deathYear birthCountry deathCountry } Person(filter:{_id: [' + people.join(",") + ']}){ _id _type label description gender thumbnail birthYear deathYear parent { _id } child { _id } spouse { _id } birthCountry { _id } deathCountry { _id } } Country(filter:{_id: [' + countries.join(",") + ']}) { _id _type label } } '
+    var query = '{ _CONTEXT { _id _type Person Country label description gender thumbnail birthYear deathYear birthCountry deathCountry } Person(filter:{_id: [' + people.map(function (item) {return '"' + item + '"'}) + ']}){ _id _type label description gender thumbnail birthYear deathYear parent { _id } child { _id } spouse { _id } birthCountry { _id } deathCountry { _id } } Country(filter:{_id: [' + countries.map( function (item) {return '"' + item + '"'}) + ']}) { _id _type label } } '
     
     var client = new HttpClient();	
-        var body = JSON.stringify({ query: query})	
-        client.post(apiUri + "/graphql", body, function(response) {	
-            result = {	
-                "@context": response.data._CONTEXT,	
-                "@id": "@graph",	
-                "Person": response.data.Person,	
-                "Country": response.data.Country,	
-            }	
-            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result));	
-            var dlAnchorElem = document.getElementById('downloadAnchorElem');	
-            dlAnchorElem.setAttribute("href", dataStr);	
-            dlAnchorElem.setAttribute("download", "data.json");	
-            dlAnchorElem.click();	
-        });	
+    var body = JSON.stringify({ query: query});	
+    client.post(apiUri + "/graphql", body, function(response) {	
+
+        let peopleKeys = ["parent", "child", "spouse"]
+        let countriesKeys = ["birthCountry", "deathCountry"]
+        for (var y in response.data.Person) { 
+            for (var x in peopleKeys) {
+                response.data.Person[y][peopleKeys[x]] = response.data.Person[y][peopleKeys[x]].filter(function (item) { return people.indexOf(item._id)>-1})
+            };
+            for (var x in countriesKeys ) {
+                response.data.Person[y][countriesKeys[x]] = response.data.Person[y][countriesKeys[x]].filter(function (item) { return countries.indexOf(item._id)>-1})
+            };
+        };
+        
+        result = {	
+            "@context": response.data._CONTEXT,	
+            "@id": "@graph",	
+            "Person": response.data.Person,	
+            "Country": response.data.Country,	
+        };
+
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result));	
+        var dlAnchorElem = document.getElementById('downloadAnchorElem');	
+        dlAnchorElem.setAttribute("href", dataStr);	
+        dlAnchorElem.setAttribute("download", "data.json");	
+        dlAnchorElem.click();	
+    });	
 
 }
 
