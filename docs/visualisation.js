@@ -1,4 +1,4 @@
-var apiUri = "http://playground.staple-api.org:5000"
+var apiUri = ""
 
 var nodes, edges, network;
 

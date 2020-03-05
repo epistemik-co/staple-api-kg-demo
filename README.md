@@ -20,16 +20,7 @@ The full documentiation of Staple API is available at [http://staple-api.org](ht
 1. Go to [https://repl.it/](https://repl.it/). 
 2. Press **+ new repl** to create a new Repl environment and choose **Import From GitHub**. 
 3. Paste the URL of this repository and import it. 
-4. Change the first line of `docs/visualisation.js` file: 
-- from: 
-```
-var apiUri = "http://playground.staple-api.org:5000"
-```
-- to: 
-```
-var apiUri = ""
-```
-5. Press the **Run** button and wait for the app to start at the automatically generated URL [https://***--five-nine.repl.co](#). 
+4. Press the **Run** button and wait for the app to start at the automatically generated URL [https://***--five-nine.repl.co](#). 
 
 The application exposes two graphical interfaces:
 - the demo FE at [https://***--five-nine.repl.co](#)
