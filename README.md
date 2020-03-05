@@ -27,7 +27,6 @@ The application exposes two graphical interfaces:
 - the Apollo playground of the underlying Staple API at [https://***--five-nine.repl.co/graphql](#), where you can issue GraphQL queries to the remote MongoDB Atlas instance storing the application (knowledge graph) data, e.g.:
 
 ```graphql
-# Write your query or mutation here
 {
   Person(filter: { _id: "http://dbpedia.org/resource/Elizabeth_II" }) {
     _id
