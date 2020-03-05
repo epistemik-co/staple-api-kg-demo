@@ -24,4 +24,4 @@ The full documentiation of Staple API is available at [http://staple-api.org](ht
 
 The application exposes two graphical interfaces:
 - the demo FE at [https://***--five-nine.repl.co](#)
-- the Apollo playground of the underlying Staple API at [https://***--five-nine.repl.co/graphql](#), where you can issue GraphQL queries to the remote MongoDB Atlas instance storing the presented data.
+- the Apollo playground of the underlying Staple API at [https://***--five-nine.repl.co/graphql](#), where you can issue GraphQL queries to the remote MongoDB Atlas instance storing the knowledge graph data.
