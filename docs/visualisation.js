@@ -10,7 +10,7 @@ const edgeNames = {
     marriage: "spouse of"
 }
 
-var instructionText = 'Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>. SHIFT+click to <b>delete nodes</b>.'
+var instructionText = 'Click on nodes to <b>find related entities</b>. CTRL+click to <b>go to Wikipedia</b>. SHIFT+click to <b>collapse nodes</b>.'
 var retrievalText = "Retrieving data. Please wait...";
 var noMoreDataText = "No more data found...";
 
