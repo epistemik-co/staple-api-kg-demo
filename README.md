@@ -2,7 +2,7 @@
 
 #  Noble Connections - Staple API demo ![logo](https://raw.githubusercontent.com/epistemik-co/staple-api-kg-demo/master/docs/favicon.ico)
 
-**Noble Connections** is a knowledge graph app demo built using [Staple API](http://staple-api.org) on top of MongoDB Atlas. 
+**Noble Connections** is a knowledge graph app demo built using [Staple API](http://staple-api.org) on top of [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). 
 
 
 # Live version
