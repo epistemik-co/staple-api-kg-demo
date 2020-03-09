@@ -18,6 +18,7 @@ async function Demo() {
     // creating an instance of Staple API
 
     const stapleApi = await staple(ontology, config);
+    const schema = stapleApi.schema;
   
     // creating the list of all people and their names for FE indexing
 
@@ -44,10 +45,11 @@ async function Demo() {
       })
 
     const server = new ApolloServer({
-        stapleApi.schema
+        schema
     });
 
-    server.applyMiddleware({ app, "/graphql" });
+    const path = "/graphql";
+    server.applyMiddleware({ app, path });
 
     app.listen({ port: 5000 }, () =>
         console.log("🚀 Server ready")
