@@ -7,10 +7,16 @@ const ontology = {
 };
 
 const config = {
-    type: "mongodb",
-    url: "mongodb+srv://guest:guest@cluster0-ek2ca.mongodb.net/test", 
-    dbName: "staple",
-    collectionName: "staple",
+    dataSources: {
+        default: "defaultSource",
+        defaultSource: {
+            type: "mongodb",
+            url: "mongodb+srv://guest:guest@cluster0-ek2ca.mongodb.net/test", 
+            dbName: "staple",
+            collectionName: "staple",
+            description: "MongoDB Atlas Demo instance"
+        }
+    }
 };
 
 async function Demo() {

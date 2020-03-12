@@ -14,7 +14,7 @@
     "url": "git+https://github.com/epistemik-co/staple-api-kg-demo.git"
   },
   "dependencies": {
-    "staple-api": "1.0.21",
+    "staple-api": "1.0.23",
     "express": "^4.17.1",
     "apollo-server-express": "^2.11.0"
   },
