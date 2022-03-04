@@ -98,7 +98,7 @@ function visualise(parent, relation, entity) {
 
         if (entity._type[0] == "Country") {
             node.shape = 'image'
-            node.image = "https://image.flaticon.com/icons/svg/664/664577.svg"
+            node.image = "https://monatglobal.com/wp-content/uploads/2016/01/location-marker-flat.png"
             node.size = 60
             node.label = entity.label
             node.type = "country"
